@@ -1,10 +1,5 @@
 const axios = require("axios");
-const {
-  accessToken,
-  client
-} = require('../app');
-
-
+const { getAccessToken } = require('./tokenManager');
 
 // Función para integrar las dos API
 function transformData(receivedData) {
@@ -22,30 +17,7 @@ function transformData(receivedData) {
 exports.transformData = transformData;
 
 
-// Función para obtener el token de acceso
-
-async function getAccessToken() {
-  try {
-
-    // Verificar si ya tenemos un token y si está válido
-    if (accessToken && !accessToken.expired()) {
-      return;
-    }
-    // se pide el token
-    const tokenParams = {
-      scope: process.env.scope
-    };
-    accessToken = await client.getToken(tokenParams);
-    return;
-  } catch (error) {
-    console.error('Error obteniendo el token de acceso:', error.message);
-    throw error;
-  }
-}
-exports.getAccessToken = getAccessToken;
 // Función para realizar la petición a la API de facturas
-
-
 
 async function getFacturas(start_date, end_date) {
   try {
